@@ -1,179 +1,102 @@
-# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Project 3: Web APIs & NLP
-
-### Description
-
-In week four we've learned about a few different classifiers. In week five we'll learn about webscraping, APIs, and Natural Language Processing (NLP). This project will put those skills to the test.
-
-For project 3, your goal is two-fold:
-1. Using [PRAW](https://praw.readthedocs.io/en/stable/), you'll collect pairs of __Question and the answer with most votes__ from various subreddits.
-2. Next, you will use [OpenAI](https://openai.com/blog/openai-api) API to ask the same question to ChatGPT. You will repeat this process for all the questions from Step 1. You need to ignore any responses where ChatGPT refuses to provide a "straightforward" answer. This kind of responses usually have a pattern and they usually start with something like "As a large language model I do not have the ability to blah blah...". If you receive such a response, move on to the next question. Gather at least 5000 such question-answer pairs and corresponding ChatGPT response.
-3. Create a dataset with the data collected in previous two steps. Ideally, the dataset should have at least the following columns:
-
-| row_id | Question | Human_written_answer | ChatGPT_generated_answer |
-| ------- | ------- | --------------------- | ------------------------ |
-| 1 | abcd | efgh | ijkl |
-
-4. You'll then use NLP to train a classifier on whether a response came from a human being or ChatGPT. This is a binary classification problem.
-
-
----
-## Checkpoints and Advice
-
-If you aren't familiar with [reddit](https://www.reddit.com/), go check it out and browse different subreddits. Each subreddit is like a forum on a different topic. [Here's a list of subreddits by topic.](https://www.reddit.com/r/ListOfSubreddits/wiki/listofsubreddits)
-
-- What you choose could partly determine how difficult your data cleaning will be and how challenging the classification task will be for your algorithms. In your presentation and executive summary, **tell us what you used**.
-- You should aim to have a function built to pull down data from the API by Monday, September 18.
-- The more data you can pull the better for your classifier. **You will want data from at least 5000 unique, non-null comments.**
+# Project 3: Web APIs & NLP
 
 ---
 
-### Requirements
+### Overview
+This project summarizes learnings across three concepts: Classification Modeling, Natural Language Processing and Data Wrangling/Acquisition.
 
-- Gather and prepare your data using the appropriate APIs.
-- **Create and compare at least two models**. These can be any classifier of your choosing: logistic regression, Naive Bayes, KNN, SVM, Random Forest Classifier, etc.
-  - **Bonus**: use a Naive Bayes classifier
-- You **must** build a robust commit history on GHE for this project, with the first commit no later than next Monday, 9/18/23.
-- A Jupyter Notebook with your analysis for a peer audience of data scientists.
-- An executive summary of your results.
-- A short presentation outlining your process and findings for a semi-technical audience.
-
-**Pro Tip:** You can find a good example executive summary [here](https://www.proposify.biz/blog/executive-summary).
-
----
-
-### Necessary Deliverables / Submission
-
-- Code and executive summary must be in a clearly commented Jupyter Notebook.
-- You must submit your slide deck.
-- Materials must be submitted by **9:00 AM EST on Monday, September 18, 2023**.
-- Presentation must be ready by **09:00 AM EST on Monday, September 18, 2023**.
-
----
-
-## Rubric
-You should make sure that you consider and/or follow most if not all of the considerations/recommendations outlined below **while** working through your project.
-
-For Project 3 the evaluation categories are as follows:<br>
-**The Data Science Process**
-- Problem Statement
-- Data Collection
-- Data Cleaning & EDA
-- Preprocessing & Modeling
-- Evaluation and Conceptual Understanding
-- Conclusion and Recommendations
-
-**Organization and Professionalism**
-- Organization
-- Visualizations
-- Python Syntax and Control Flow
-- Presentation
-
-**Scores will be out of 30 points based on the 10 categories in the rubric.** <br>
-*3 points per section*<br>
-
-| Score | Interpretation |
-| --- | --- |
-| **0** | *Project fails to meet the minimum requirements for this item.* |
-| **1** | *Project meets the minimum requirements for this item, but falls significantly short of portfolio-ready expectations.* |
-| **2** | *Project exceeds the minimum requirements for this item, but falls short of portfolio-ready expectations.* |
-| **3** | *Project meets or exceeds portfolio-ready expectations; demonstrates a thorough understanding of every outlined consideration.* |
+The following steps were followed, in order to complete this analysis:
+1. Use [PRAW](https://praw.readthedocs.io/en/stable/) to collect and store question-response pairs from the following subreddits:
+* [AskHistory](https://www.reddit.com/r/AskHistory/)
+* [askscience](https://www.reddit.com/r/askscience/)
+* [careerguidance](https://www.reddit.com/r/cscareerquestions)
+* [cscareerquestions](https://www.reddit.com/r/careerguidance/)
+<br>These were labeled as **Human Answers**. A total of 5523 pairs were collected using this method.
 
 
-### The Data Science Process
-
-**Problem Statement**
-- Is it clear what the goal of the project is?
-- What type of model will be developed?
-- How will success be evaluated?
-- Is the scope of the project appropriate?
-- Is it clear who cares about this or why this is important to investigate?
-- Does the student consider the audience and the primary and secondary stakeholders?
-
-**Data Collection**
-- Was enough data gathered to generate a significant result?
-- Was data collected that was useful and relevant to the project?
-- Was data collection and storage optimized through custom functions, pipelines, and/or automation?
-- Was thought given to the server receiving the requests such as considering number of requests per second?
-
-**Data Cleaning and EDA**
-- Are missing values imputed/handled appropriately?
-- Are distributions examined and described?
-- Are outliers identified and addressed?
-- Are appropriate summary statistics provided?
-- Are steps taken during data cleaning and EDA framed appropriately?
-- Does the student address whether or not they are likely to be able to answer their problem statement with the provided data given what they've discovered during EDA?
-
-**Preprocessing and Modeling**
-- Is text data successfully converted to a matrix representation?
-- Are methods such as stop words, stemming, and lemmatization explored?
-- Does the student properly split and/or sample the data for validation/training purposes?
-- Does the student test and evaluate a variety of models to identify a production algorithm (**AT MINIMUM:** two classification models, **BONUS:** try a Naive Bayes)?
-- Does the student defend their choice of production model relevant to the data at hand and the problem?
-- Does the student explain how the model works and evaluate its performance successes/downfalls?
-
-**Evaluation and Conceptual Understanding**
-- Does the student accurately identify and explain the baseline score?
-- Does the student select and use metrics relevant to the problem objective?
-- Does the student interpret the results of their model for purposes of inference?
-- Is domain knowledge demonstrated when interpreting results?
-- Does the student provide appropriate interpretation with regards to descriptive and inferential statistics?
-
-**Conclusion and Recommendations**
-- Does the student provide appropriate context to connect individual steps back to the overall project?
-- Is it clear how the final recommendations were reached?
-- Are the conclusions/recommendations clearly stated?
-- Does the conclusion answer the original problem statement?
-- Does the student address how findings of this research can be applied for the benefit of stakeholders?
-- Are future steps to move the project forward identified?
+2. Use [OpenAI API](https://openai.com/blog/openai-api) to feed the extracted Reddit prompts to ChatGPT, and store responses as **AI Answers**. 
+Data was collected using:
+* The "text-babbage-001" method
+* Temperature of 0.6
+* Batches of 20 prompts at a time within limited sample ranges. The code was activated 25 times (with additional runs to ensure continuity across range bounds) in order to cycle through all available prompts.
+* A lag time of 0.03 seconds between every 20-prompt batch within an activated code run
+* Max_tokens of 300
+<br>All responses were merged into a single column. 
 
 
-### Organization and Professionalism
+3. Human Answers were classified as 0 and AI Answers were classified as 1, to stack into a single column.
 
-**Project Organization**
-- Are modules imported correctly (using appropriate aliases)?
-- Are data imported/saved using relative paths?
-- Does the README provide a good executive summary of the project?
-- Is markdown formatting used appropriately to structure notebooks?
-- Are there an appropriate amount of comments to support the code?
-- Are files & directories organized correctly?
-- Are there unnecessary files included?
-- Do files and directories have well-structured, appropriate, consistent names?
-- Is there a robust commit history?
+4. The following text was removed from AI Answers:
+* "I am only a machine"
+* "As an AI language model"
 
-**Visualizations**
-- Are sufficient visualizations provided?
-- Do plots accurately demonstrate valid relationships?
-- Are plots labeled properly?
-- Are plots interpreted appropriately?
-- Are plots formatted and scaled appropriately for inclusion in a notebook-based technical report?
+5. Rows were removed if the following text appeared in the Human Answers column:
+* \[deleted\]
+* \[removed\]
 
-**Python Syntax and Control Flow**
-- Is care taken to write human readable code?
-- Is the code syntactically correct (no runtime errors)?
-- Does the code generate desired results (logically correct)?
-- Does the code follows general best practices and style guidelines?
-- Are Pandas functions used appropriately?
-- Are `sklearn` and `NLTK` methods used appropriately?
+6. Data was split using train-test-split, and run through the following models (with and without Lemmatization). A best-fit model was identified for the non-lemmatized data. 
+* Bernoulli
+* Multinomial
+* Logistical
 
-**Presentation**
-- Is the problem statement clearly presented?
-- Does a strong narrative run through the presentation building toward a final conclusion?
-- Are the conclusions/recommendations clearly stated?
-- Is the level of technicality appropriate for the intended audience?
-- Is the student substantially over or under time?
-- Does the student appropriately pace their presentation?
-- Does the student deliver their message with clarity and volume?
-- Are appropriate visualizations generated for the intended audience?
-- Are visualizations necessary and useful for supporting conclusions/explaining findings?
+The models were run first with a CountVectorizer and then a TF-IDF string pre-processing.
+The models were run through a gridsearch pipeline, with the following parameters:
+* max_features: \[5000\],
+* min_df: \[2,5\],
+* max_df: \[0.9, 0.95\],
+* ngram_range' : \[(1,1), (1, 2), (2,2)\],
+* stop_words: ['english']
+
+Additional models (and selected parameters) that were run include:
+* DecisionTree
+* Random Forest
+    * n_estimators: [100, 150, 200],
+    * max_depth: [None, 3, 4, 5, 6, 7]
+
+<br>Finally, ADA boosting was applied (with n_estimators: [100,1000]) in order to optimize the a potential model.
+
+<br>Accuracy, specificity and sensitivity were compared across the best-fit model for non-lemmatized and lemmatized data, in order to understand how it impacts model results.
 
 
----
+### Modeling
 
-### Why did we choose this project for you?
-This project covers three of the biggest concepts we cover in the class: Classification Modeling, Natural Language Processing and Data Wrangling/Acquisition.
+| **Lemmatization** | **Vectorizer** | **Model** | **Train** | **Test** | **Best** |
+| --- | --- | --- | --- | --- | --- |
+| No | CountVectorizer/ TFIDF | Bernoulli | 0.79702 | 0.78653 | 0.78474 |
+| Yes | CountVectorizer/ TFIDF | Bernoulli  | 0.95474 | 0.96206 | 0.95226 |
+| No | CountVectorizer/ TFIDF | Multinomial | 0.82988<br>0.90303 | 0.78319<br>0.85236 | 0.78016<br>0.83236 |
+| Yes | CountVectorizer/ TFIDF | Multinomial  | 0.99652 | 0.99739 | 0.99615<br>0.83236 |
+| No | CountVectorizer/ TFIDF | Logistic | 0.94804<br>0.95771 | 0.88471<br>0.89215 | 0.87737<br>0.87873 |
+| Yes | CountVectorizer/ TFIDF | Logistic  | 0.95474 | 0.96206 | 0.95226|
+| No | CountVectorizer/ TFIDF | DecisionTree | 0.99975<br>0.99975| 0.83004<br>0.82595 | -- |
+| Yes | CountVectorizer/ TFIDF | DecisionTree  | 0.999752<br> -- | 0.99256<br> -- | -- |
+| No | CountVectorizer/ TFIDF | Random Forest | 0.999752<br> -- | 0.90368<br>0.91000 | 0.90018 |
+| Yes | CountVectorizer/ TFIDF | Random Forest  | 0.99975 | 0.99479 | 0.99504 |
 
-Part 1 of the project focuses on **Data wrangling/gathering/acquisition**. This is a very important skill as not all the data you will need will be in clean CSVs or a single table in SQL.  There is a good chance that wherever you land you will have to gather some data from some unstructured/semi-structured sources; when possible, requesting information from an API, but sometimes scraping it because they don't have an API (or it's terribly documented).
+**With ADA Boosting**
 
-Part 2 of the project focuses on **Natural Language Processing** and converting standard text data (like Titles and Comments) into a format that allows us to analyze it and use it in modeling.
+| **Lemmatization** | **Vectorizer** | **Model** | **Train** | **Test** | **Best** |
+| --- | --- | --- | --- | --- | --- |
+| No | CountVectorizer/ TFIDF | DecisionTree | 0.98648<br>0.99938 | 0.89103<br>0.89773 | -- |
+| Yes | CountVectorizer/ TFIDF | DecisionTree  | 0.99975<br>0.99975 | 0.99516<br>0.99516 | -- |
+| No | CountVectorizer/ TFIDF | Logistic | 0.97247<br>0.87637 | 0.90256<br>0.86091 | -- |
+| Yes | CountVectorizer/ TFIDF | Logistic  | 0.99975<br>0.99764 | 0.99590<br>0.99665 | -- |
 
-Part 3 of the project focuses on **Classification Modeling**.  Given that project 2 was a regression focused problem, we needed to give you a classification focused problem to practice the various models, means of assessment and preprocessing associated with classification.   
+
+### Model Selection and Evaluation
+The model that was selected as optimal for predicting whether a response to a Reddit question will be by a human or ChatGPT was:
+- ADA Boosted Logistical Regression.
+
+This model was selected due to its high scores for train and test data sets, as well as the proximity of the results between the two groups (i.e. minimized overfitting by adjusting for bias and variance). 
+
+The model (with no lemmatization) attained an accuracy score of: 0.90256
+<br>The model (with lemmatization) attained an accuracy score of: 1.0
+
+The model (with no lemmatization) attained an specificity score of: 0.88105
+<br>The model (with lemmatization) attained an specificity score of: 0.99171
+
+The model (with no lemmatization) attained an sensitivity score of: 0.92464
+<br>The model (with lemmatization) attained an sensitivity score of: 0.99590
+
+Based on this high-level side-by-side comparison, it is evident that Lemmatizing data prior to pre-processing and modeling is moving all model evaluation criteria up, allowing us to attain a near perfect prediction model.
+
